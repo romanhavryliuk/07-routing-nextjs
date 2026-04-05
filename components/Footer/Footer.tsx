@@ -1,0 +1,24 @@
+import css from "./Footer.module.css";
+import Link from "next/link";
+
+const Footer = () => {
+  return (
+    <footer className={css.footer}>
+      <div className={css.content}>
+        <p>© {new Date().getFullYear()} NoteHub. All rights reserved.</p>
+        <div className={css.wrap}>
+          <p>Developer: Roman Havryliuk</p>
+          <p>
+            Contact us:
+            <Link href="mailto:romanfest1221@gmail.com">
+              romanfest1221@gmail.com
+            </Link>
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
+
