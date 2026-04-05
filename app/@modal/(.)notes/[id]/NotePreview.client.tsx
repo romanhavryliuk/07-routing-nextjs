@@ -1,15 +1,14 @@
-'use client'
+"use client";
 
-import css from "./NotePreview.module.css"
+import css from "./NotePreview.module.css";
 
 import Modal from "@/components/Modal/Modal";
 import { fetchNoteById } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 
-
 export default function NotePreview() {
-    const router = useRouter();
+  const router = useRouter();
     const close = () => router.back();
 
     const { id } = useParams<{ id: string }>();
@@ -18,18 +17,20 @@ export default function NotePreview() {
         queryKey: ["note", id],
         queryFn: () => fetchNoteById(id),
         refetchOnMount: false,
-    })
+    });
 
-    if (isLoading) return <p>Loading, please wait...</p>;
+  return (
+    <Modal onClose={close}>
+      {isLoading && <p>Loading, please wait...</p>}
 
-  if (error || !data) return <p>Something went wrong.</p>;
+      {error && !isLoading && <p>Something went wrong.</p>}
 
-    return (
-        <Modal onClose={() => router.back()}>
-            {isLoading && <p>Loading, please wait...</p>}
-            {(error || !data) && <p>Something went wrong.</p>}
-            {data && (
+      {data && !isLoading && (
         <div className={css.container}>
+          <button className={css.backBtn} onClick={close}>
+            Back to notes
+          </button>
+
           <div className={css.item}>
             <div className={css.header}>
               <h2>{data.title}</h2>
@@ -40,9 +41,6 @@ export default function NotePreview() {
           </div>
         </div>
       )}
-
-
-        </Modal>
-    )
-
+    </Modal>
+  );
 }
