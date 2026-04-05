@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import css from "./Modal.module.css";
@@ -31,12 +32,12 @@ export default function Modal({ onClose, children }: ModalProps) {
     }
   };
 
-  return createPortal(
+   return createPortal(
     <div
       className={css.backdrop}
+      onClick={handleBackdropClick}
       role="dialog"
       aria-modal="true"
-      onClick={handleBackdropClick}
     >
       <div className={css.modal}>{children}</div>
     </div>,

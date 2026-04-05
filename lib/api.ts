@@ -21,26 +21,29 @@ interface FetchNotesParams {
   page: number;
   perPage: number;
   search?: string;
+  tag?: string;
 }
 
 export const fetchNotes = async ({
   page,
   perPage,
   search,
+  tag,
 }: FetchNotesParams): Promise<FetchNotesResponse> => {
   const response = await noteApi.get<FetchNotesResponse>("/notes", {
     params: {
       page,
       search,
       perPage,
+      tag,
     },
   });
   return response.data;
 };
 
-export const fetchSingleNote = async (id: string): Promise<Note> => {
-  const { data } = await noteApi.get<Note>(`/notes/${id}`);
-  return data;
+export const fetchNoteById = async (id: string): Promise<Note> => {
+  const response = await noteApi.get<Note>(`/notes/${id}`);
+  return response.data;
 };
 
 export const deleteNote = async (id: string): Promise<Note> => {

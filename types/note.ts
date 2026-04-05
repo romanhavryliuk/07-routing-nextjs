@@ -9,4 +9,10 @@ interface Note {
   updatedAt: string;
 }
 
-export type { Note, NoteTag };
+interface CreateNote {
+  title: string;
+  content: string;
+  tag: NoteTag;
+}
+
+export type { Note, NoteTag, CreateNote };
